@@ -1,0 +1,33 @@
+<button class="btn btn-primary" (click)="triggerModal(modalData)">Form Details</button>
+
+<ng-template #modalData let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Angular Bootstrap Modal Popup</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter your name" formControlName="name"
+            [class.error] ="profileForm.get('name').invalid && profileForm.get('name').touched">
+            <div *ngIf="profileForm.get('name').invalid && profileForm.get('name').touched">
+                <small class="text-danger" *ngIf="profileForm.get('name').errors?.required">*NAme is required</small>
+                <small class="text-danger" *ngIf="profileForm.get('name').errors?.minlength">*Min length  is 3</small>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="prn">PRN</label>
+            <input type="text" name="prn" id="prn" placeholder="enter your prn number" formControlName="prn">
+        </div>
+        <input type="submit" class="btn btn-success"value="Submit" [disabled]="profileForm.invalid">
+      </form>
+    </div>
+    {{profileForm.value | json}}
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.close('Save click')" > Close</button>
+    </div>
+  </ng-template>
